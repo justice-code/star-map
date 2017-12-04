@@ -11,6 +11,7 @@
     <modules>
         <module>console</module>
         <module>registry</module>
+        <module>task</module>
     </modules>
 
 

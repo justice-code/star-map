@@ -11,9 +11,6 @@
 
     <artifactId>console</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>../task</module>
-    </modules>
 
 
 </project>
