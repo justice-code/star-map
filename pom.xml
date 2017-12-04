@@ -6,7 +6,12 @@
 
     <groupId>org.eddy</groupId>
     <artifactId>star-map</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>console</module>
+        <module>registry</module>
+    </modules>
 
 
 </project>
