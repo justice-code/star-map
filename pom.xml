@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>extension</module>
         <module>console</module>
         <module>registry</module>
         <module>task</module>
