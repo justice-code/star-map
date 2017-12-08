@@ -1,0 +1,6 @@
+grant {
+        permission java.security.AllPermission;
+};
+deny {
+        permission groovy.security.GroovyCodeSourcePermission "/groovy/shell";
+};

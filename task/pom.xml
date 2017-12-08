@@ -20,5 +20,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.sourceforge.pro-grade</groupId>
+            <artifactId>pro-grade</artifactId>
+        </dependency>
     </dependencies>
 </project>

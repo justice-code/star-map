@@ -49,6 +49,12 @@
                 <artifactId>lombok</artifactId>
                 <version>1.16.4</version>
             </dependency>
+            <dependency>
+                <groupId>net.sourceforge.pro-grade</groupId>
+                <artifactId>pro-grade</artifactId>
+                <version>1.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
