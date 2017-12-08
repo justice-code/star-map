@@ -15,7 +15,6 @@
  */
 package org.eddy.constant;
 
-import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
 
 /**
@@ -41,8 +40,7 @@ public class Constants {
 
     public static final String VERSION_KEY = "version";
 
-    public static final Pattern COMMA_SPLIT_PATTERN = Pattern
-            .compile("\\s*[,]+\\s*");
+    public static final Pattern COMMA_SPLIT_PATTERN = Pattern.compile("\\s*[,]+\\s*");
 
 
 }
