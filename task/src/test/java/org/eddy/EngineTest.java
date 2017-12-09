@@ -1,12 +1,9 @@
 package org.eddy;
 
-import net.sourceforge.prograde.policy.ProgradePolicyFile;
 import net.sourceforge.prograde.sm.ProgradeSecurityManager;
 import org.eddy.engine.Engine;
 import org.eddy.engine.GroovyEngine;
 import org.junit.Test;
-
-import java.security.Policy;
 
 public class EngineTest {
 
@@ -33,5 +30,11 @@ public class EngineTest {
         Engine engine = new GroovyEngine();
         engine.execute("org.eddy.A a = new org.eddy.A()\n" +
                 "a.a()");
+    }
+
+    @Test
+    public void test4() {
+        A a = new A();
+        a.a();
     }
 }
