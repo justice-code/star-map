@@ -4,7 +4,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.eddy.permission.InvokePermission;
+import org.eddy.permission.annotation.Permission;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,6 +20,8 @@ public class PermissionAspect {
 
     @Before("permission()")
     public void permissionCheck(JoinPoint joinPoint) {
-        Optional.ofNullable(System.getSecurityManager()).ifPresent(securityManager -> securityManager.checkPermission(new InvokePermission()));
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Permission permission = methodSignature.getMethod().getAnnotation(Permission.class);
+        Optional.ofNullable(System.getSecurityManager()).ifPresent(securityManager -> securityManager.checkPermission(new InvokePermission(permission.value())));
     }
 }
