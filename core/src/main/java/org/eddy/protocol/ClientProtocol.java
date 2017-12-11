@@ -8,5 +8,5 @@ public interface ClientProtocol {
 
     void close();
 
-    void send();
+    void send(Data data);
 }
