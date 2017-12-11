@@ -11,5 +11,11 @@
 
     <artifactId>registry</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
 </project>
