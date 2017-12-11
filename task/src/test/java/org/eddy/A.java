@@ -1,11 +1,13 @@
 package org.eddy;
 
-import java.util.Optional;
+import org.eddy.permission.annotation.Permission;
+import org.springframework.stereotype.Component;
 
+@Component
 public class A {
 
+    @Permission("test")
     public void a() {
-        Optional.ofNullable(System.getSecurityManager()).ifPresent(securityManager -> securityManager.checkPermission(new InvokePermission("t")));
         System.out.println("a");
     }
 }

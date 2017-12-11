@@ -15,11 +15,11 @@ import java.util.Optional;
 @Component
 public class PermissionAspect {
 
-    @Pointcut("@annotation(org.eddy.permission.annotation.Permission)")
+    @Pointcut("(execution(* org.eddy..*(..)) && (@annotation(org.eddy.permission.annotation.Permission)))")
     public void permission(){}
 
     @Before("permission()")
-    public void permissionCheck(JoinPoint joinPoint) {
+    public void permissionCheck(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Permission permission = methodSignature.getMethod().getAnnotation(Permission.class);
         Optional.ofNullable(System.getSecurityManager()).ifPresent(securityManager -> securityManager.checkPermission(new InvokePermission(permission.value())));
