@@ -26,7 +26,8 @@ public class SpringBootTestMain {
         System.setProperty("java.security.policy", "/Users/xuyi/java/star-map/task/src/test/resources/java.policy");
         System.setSecurityManager(new ProgradeSecurityManager());
         Engine engine = new GroovyEngine();
-        engine.execute("org.eddy.A a1 = org.eddy.SpringContext.getA()\n" +
+        engine.execute("" +
+                "org.eddy.A a1 = org.eddy.SpringContext.getA()\n" +
                 "a1.a()");
     }
 }
