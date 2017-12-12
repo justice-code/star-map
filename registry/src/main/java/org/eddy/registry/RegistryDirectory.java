@@ -12,17 +12,10 @@ import java.util.List;
 @ToString
 public class RegistryDirectory {
 
-    private String path;
     private List<String> urls;
 
-    public RegistryDirectory(String path) {
-        this.path = path;
-    }
-
     public void notify(String parentPath, List<String> currentChildren) {
-        if (StringUtils.isEquals(parentPath, path)) {
-            urls = currentChildren;
-        }
+        urls = currentChildren;
     }
 
     public List<String> list() {

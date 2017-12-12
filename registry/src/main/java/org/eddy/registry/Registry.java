@@ -6,5 +6,9 @@ public interface Registry {
 
     void doRegister(URL url);
 
+    void unRegister(URL url);
 
+    void subscribe();
+
+    void unSubscribe();
 }
