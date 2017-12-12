@@ -16,7 +16,7 @@ public class ZkTest {
 //        zkc.createEphemeral("/star");
 //        zkc.createPersistent("/star");
 //        zkc.createPersistent("/star/provider");
-        zkc.subscribeChildChanges("/star/provider", new IZkChildListener() {
+        zkc.subscribeChildChanges("/test/provider", new IZkChildListener() {
             @Override
             public void handleChildChange(String parentPath, List<String> currentChildren) throws Exception {
                 currentChildren.stream().forEach(s -> System.out.println(s));
