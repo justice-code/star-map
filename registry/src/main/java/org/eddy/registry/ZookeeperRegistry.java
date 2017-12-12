@@ -1,8 +1,10 @@
 package org.eddy.registry;
 
 import org.eddy.url.URL;
+import org.eddy.util.StringUtils;
 
-public class ZookeeperRegistry implements Registry{
+public class ZookeeperRegistry implements Registry {
+
     @Override
     public void doRegister(URL url) {
 
@@ -22,4 +24,9 @@ public class ZookeeperRegistry implements Registry{
     public void unSubscribe() {
 
     }
+
+    private static String rootPath() {
+        return String.join(RegistryConstant.separator, StringUtils.EMPTY, RegistryConfig.GROUP, RegistryConstant.provider, StringUtils.EMPTY);
+    }
+
 }

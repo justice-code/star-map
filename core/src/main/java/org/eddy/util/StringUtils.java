@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 public final class StringUtils {
 
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
+    public static final String EMPTY = "";
     private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
     private static final Pattern KVP_PATTERN = Pattern.compile("([_.a-zA-Z0-9][-_.a-zA-Z0-9]*)[=](.*)"); //key value pair pattern.
 
