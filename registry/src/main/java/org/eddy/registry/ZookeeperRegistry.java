@@ -5,6 +5,7 @@ import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,11 +16,11 @@ public class ZookeeperRegistry implements Registry {
 
     private ZkClient zkClient;
     private String rootPath;
+    @Autowired
     private RegistryDirectory directory;
 
     @PostConstruct
     public void init() {
-        directory = new RegistryDirectory();
         zkClient = new ZkClient(new ZkConnection(RegistryConfig.ADDRESS), RegistryConstant.timeout);
         rootPath = createNotExists();
     }
