@@ -1,12 +1,14 @@
 package org.eddy.protocol;
 
+import org.eddy.url.URL;
+
 public interface ClientProtocol {
 
     void open();
 
-    void connect();
+    void connect(URL url) throws Exception;
 
-    void close();
+    void close(URL url);
 
-    void send(Data data);
+    void send(URL url, Data data) throws Exception;
 }
