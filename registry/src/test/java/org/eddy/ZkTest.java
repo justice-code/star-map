@@ -25,4 +25,16 @@ public class ZkTest {
 
         System.in.read();
     }
+
+    @Test
+    public void test2() {
+        ZkClient zkc = new ZkClient(new ZkConnection("192.168.23.127:2181"), 3_000);
+        zkc.createPersistent("/star");
+    }
+
+    @Test
+    public void test3() {
+        ZkClient zkc = new ZkClient(new ZkConnection("192.168.23.127:2181"), 3_000);
+        System.out.println(zkc.delete("/t"));;
+    }
 }

@@ -14,7 +14,7 @@ public class RegistryDirectory {
 
     private List<String> urls;
 
-    public void notify(String parentPath, List<String> currentChildren) {
+    public void notify(List<String> currentChildren) {
         urls = currentChildren;
     }
 
