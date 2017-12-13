@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Component("starClient")
 public class StarClientProtocol implements ClientProtocol{
 
     private Bootstrap bootstrap;

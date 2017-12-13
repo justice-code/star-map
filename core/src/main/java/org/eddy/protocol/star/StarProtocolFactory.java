@@ -5,7 +5,7 @@ import org.eddy.protocol.ProtocolFactory;
 import org.eddy.protocol.ServerProtocol;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("StarProtocol")
 public class StarProtocolFactory implements ProtocolFactory {
 
     @Override
