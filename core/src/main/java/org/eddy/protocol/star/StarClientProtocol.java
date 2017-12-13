@@ -7,7 +7,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StarClientProtocol implements ClientProtocol{
 
     @Override

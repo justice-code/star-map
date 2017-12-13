@@ -5,10 +5,12 @@ import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Component
 public class ZookeeperRegistry implements Registry {
 
     private ZkClient zkClient;
