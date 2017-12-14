@@ -9,6 +9,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Data implements Serializable {
 
     private static final long serialVersionUID = -5843097650946558124L;

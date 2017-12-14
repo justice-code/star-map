@@ -4,6 +4,7 @@ import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.ProtocolFactory;
 import org.eddy.url.URL;
+import org.eddy.util.KeyUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,14 @@ public class SpringBootTestMain {
 
     @Test
     public void testClient() throws Exception {
-        Data data = new Data(UUID.randomUUID().toString(), false);
+        Data data = new Data(KeyUtil.key(), false);
+        Data second = new Data(KeyUtil.key(), "test", false);
         ClientProtocol clientProtocol = protocolFactory.client();
         clientProtocol.open();
         clientProtocol.connect(url);
         clientProtocol.send(url, data);
+        clientProtocol.send(url, second);
+        System.in.read();
     }
 
 }
