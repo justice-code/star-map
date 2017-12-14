@@ -1,5 +1,6 @@
 package org.eddy.protocol;
 
+import org.eddy.future.StarFuture;
 import org.eddy.url.URL;
 
 public interface ClientProtocol {
@@ -10,5 +11,5 @@ public interface ClientProtocol {
 
     void close(URL url);
 
-    void send(URL url, Data data) throws Exception;
+    StarFuture send(URL url, Data data) throws Exception;
 }

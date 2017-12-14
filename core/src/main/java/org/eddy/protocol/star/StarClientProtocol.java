@@ -8,6 +8,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.eddy.future.FutureHolder;
+import org.eddy.future.StarFuture;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.star.handler.ClientReadHandler;
@@ -59,7 +61,7 @@ public class StarClientProtocol implements ClientProtocol{
     }
 
     @Override
-    public void send(URL url, Data data) throws Exception{
+    public StarFuture send(URL url, Data data) throws Exception{
         if (! channelMap.containsKey(url.getAddress())) {
             connect(url);
         }
@@ -70,5 +72,6 @@ public class StarClientProtocol implements ClientProtocol{
             channel = channelMap.get(url.getAddress());
         }
         channel.writeAndFlush(data);
+        return FutureHolder.createFuture(data);
     }
 }
