@@ -58,7 +58,7 @@ public class StarClientProtocol implements ClientProtocol{
 
     @Override
     public void send(URL url, Data data) throws Exception{
-        if (channelMap.containsKey(url.getAddress())) {
+        if (! channelMap.containsKey(url.getAddress())) {
             connect(url);
         }
 
@@ -67,7 +67,6 @@ public class StarClientProtocol implements ClientProtocol{
             connect(url);
             channel = channelMap.get(url.getAddress());
         }
-
         channel.writeAndFlush(data);
     }
 }
