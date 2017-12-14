@@ -13,7 +13,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<Data> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Data request) throws Exception {
-        System.out.println(request);
         handleRequest(request);
         ctx.channel().writeAndFlush(new Data(request.getId(), true));
     }

@@ -1,5 +1,6 @@
 package org.eddy;
 
+import org.eddy.future.StarFuture;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.ProtocolFactory;
@@ -43,8 +44,11 @@ public class SpringBootTestMain {
         ClientProtocol clientProtocol = protocolFactory.client();
         clientProtocol.open();
         clientProtocol.connect(url);
-        clientProtocol.send(url, data);
-        clientProtocol.send(url, second);
+        StarFuture starFuture1 = clientProtocol.send(url, data);
+        StarFuture starFuture2 = clientProtocol.send(url, second);
+
+        System.out.println(starFuture1.get());
+        System.out.println(starFuture2.get());
         System.in.read();
     }
 
