@@ -11,4 +11,6 @@ public interface Registry {
     void subscribe();
 
     void unSubscribe();
+
+    RegistryDirectory getDirectory();
 }

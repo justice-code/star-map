@@ -1,8 +1,6 @@
 package org.eddy.registry;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.eddy.loadbalance.LoadBalance;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
@@ -15,13 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Component
+@RequiredArgsConstructor
 public class RegistryDirectory {
 
     private List<String> urls;
 
-    @Autowired
-    @Qualifier("random")
+    @NonNull
     private LoadBalance loadBalance;
 
     public void notify(List<String> currentChildren) {

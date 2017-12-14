@@ -49,7 +49,7 @@ public class SpringBootTestMain {
         StarFuture starFuture1 = clientProtocol.send(url, data);
         StarFuture starFuture2 = clientProtocol.send(url, second);
 
-        TimeUnit.SECONDS.sleep(1);
+//        TimeUnit.SECONDS.sleep(1);
 
         long begin = System.currentTimeMillis();
         System.out.println(starFuture1.get());

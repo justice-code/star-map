@@ -3,6 +3,7 @@ package org.eddy.registry;
 import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
+import org.eddy.loadbalance.RandomLoadBalance;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,14 @@ public class ZookeeperRegistry implements Registry {
 
     private ZkClient zkClient;
     private String rootPath;
-    @Autowired
     private RegistryDirectory directory;
 
     @PostConstruct
     public void init() {
         zkClient = new ZkClient(new ZkConnection(RegistryConfig.ADDRESS), RegistryConstant.timeout);
         rootPath = createNotExists();
+        //TODO 拓展点
+        directory = new RegistryDirectory(new RandomLoadBalance());
     }
 
     @Override
@@ -38,6 +40,8 @@ public class ZookeeperRegistry implements Registry {
 
     @Override
     public void subscribe() {
+        directory.notify(zkClient.getChildren(rootPath));
+
         zkClient.subscribeChildChanges(rootPath, new IZkChildListener() {
             @Override
             public void handleChildChange(String parentPath, List<String> currentChildren) throws Exception {
@@ -51,6 +55,11 @@ public class ZookeeperRegistry implements Registry {
         zkClient.unsubscribeAll();
     }
 
+    @Override
+    public RegistryDirectory getDirectory() {
+        return directory;
+    }
+
     //************************************************** private ********************************************************
 
     private String createNotExists() {
@@ -60,7 +69,7 @@ public class ZookeeperRegistry implements Registry {
             zkClient.createPersistent(groupPath);
         }
 
-        String providerPath = String.join(RegistryConstant.separator, StringUtils.EMPTY, RegistryConfig.GROUP, RegistryConstant.provider, StringUtils.EMPTY);
+        String providerPath = String.join(RegistryConstant.separator, StringUtils.EMPTY, RegistryConfig.GROUP, RegistryConstant.provider);
         if (! zkClient.exists(providerPath)) {
             zkClient.createPersistent(providerPath);
         }

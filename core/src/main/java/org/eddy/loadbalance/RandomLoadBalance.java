@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Random;
 
-@Component("random")
 public class RandomLoadBalance implements LoadBalance{
 
     private Random random = new Random();
