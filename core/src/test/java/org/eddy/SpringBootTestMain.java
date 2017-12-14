@@ -14,8 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.UUID;
-
 @SpringBootApplication
 @SpringBootTest(classes = SpringBootTestMain.class)
 @RunWith(SpringJUnit4ClassRunner.class)
