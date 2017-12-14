@@ -28,7 +28,6 @@ public class StarClientProtocol implements ClientProtocol{
         bootstrap = new Bootstrap();
         bootstrap.group(eventLoop);
         bootstrap.channel(NioSocketChannel.class);
-        bootstrap.option(ChannelOption.SO_TIMEOUT, 3 * 1000);
         bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3 * 1000);
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
         bootstrap.handler(new ChannelInitializer<SocketChannel>() {

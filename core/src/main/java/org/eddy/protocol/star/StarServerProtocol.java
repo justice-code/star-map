@@ -29,7 +29,6 @@ public class StarServerProtocol implements ServerProtocol {
         serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(eventLoop, workLoop);
         serverBootstrap.channel(NioServerSocketChannel.class);
-        serverBootstrap.childOption(ChannelOption.SO_TIMEOUT, 3 * 1000);
         serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
         serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>(){
 
