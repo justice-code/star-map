@@ -1,6 +1,7 @@
 package org.eddy.protocol.star;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -13,10 +14,13 @@ import org.eddy.protocol.star.handler.ServerDecoder;
 import org.eddy.url.URL;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component("starServer")
 public class StarServerProtocol implements ServerProtocol {
 
     private ServerBootstrap serverBootstrap;
+    private Channel serverChannel;
 
     @Override
     public void openServer(URL url) throws Exception{
@@ -37,5 +41,11 @@ public class StarServerProtocol implements ServerProtocol {
 //                        .addLast("handler", new ServerHandler());
             }
         });
+        serverChannel = serverBootstrap.bind(url.getPort()).sync().sync().channel();
+    }
+
+    @Override
+    public void close() {
+        Optional.ofNullable(serverChannel).ifPresent(channel -> channel.close());
     }
 }
