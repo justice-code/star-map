@@ -15,6 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.concurrent.TimeUnit;
+
 @SpringBootApplication
 @SpringBootTest(classes = SpringBootTestMain.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,8 +49,13 @@ public class SpringBootTestMain {
         StarFuture starFuture1 = clientProtocol.send(url, data);
         StarFuture starFuture2 = clientProtocol.send(url, second);
 
+        TimeUnit.SECONDS.sleep(1);
+
+        long begin = System.currentTimeMillis();
         System.out.println(starFuture1.get());
         System.out.println(starFuture2.get());
+        System.out.println("task:" + (System.currentTimeMillis() - begin));
+
         System.in.read();
     }
 

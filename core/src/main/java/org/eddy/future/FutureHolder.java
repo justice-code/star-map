@@ -11,7 +11,7 @@ public class FutureHolder {
     private static Map<String, StarFuture> holder = new HashMap<>();
 
     public static void receive(Data result) {
-        Optional.ofNullable(holder.get(result.getId())).orElseThrow(() -> new RuntimeException("can not find future")).receive(result);
+        Optional.ofNullable(holder.remove(result.getId())).orElseThrow(() -> new RuntimeException("can not find future")).receive(result);
     }
 
     public static StarFuture createFuture(Data data) {
