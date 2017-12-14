@@ -5,11 +5,12 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.star.handler.ClientReadHandler;
-import org.eddy.protocol.star.handler.DataDecoder;
-import org.eddy.protocol.star.handler.DataEncoder;
 import org.eddy.url.URL;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +36,10 @@ public class StarClientProtocol implements ClientProtocol{
             public void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline()
 //                        .addLast("logging",new LoggingHandler(LogLevel.INFO))
-                        .addLast("decoder", new DataDecoder())
-                        .addLast("encoder", new DataEncoder())
-                        .addLast("handler", new ClientReadHandler());
+                        .addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))) // in 1
+                        .addLast("handler", new ClientReadHandler()) // in 2
+                        .addLast("encoder", new ObjectEncoder()); // out 3
+
             }
         });
     }

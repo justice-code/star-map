@@ -8,9 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 import org.eddy.protocol.ServerProtocol;
-import org.eddy.protocol.star.handler.DataEncoder;
-import org.eddy.protocol.star.handler.ServerDecoder;
+import org.eddy.protocol.star.handler.ServerHandler;
 import org.eddy.url.URL;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +37,10 @@ public class StarServerProtocol implements ServerProtocol {
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
                 ch.pipeline()
-                        .addLast("decoder", new ServerDecoder())
-                        .addLast("encoder", new DataEncoder());
-//                        .addLast("handler", new ServerHandler());
+                        .addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))) // in 1
+                        .addLast("handler", new ServerHandler()) // in 2
+                        .addLast("encoder", new ObjectEncoder()); // out 3
+
             }
         });
         serverChannel = serverBootstrap.bind(url.getPort()).sync().sync().channel();
