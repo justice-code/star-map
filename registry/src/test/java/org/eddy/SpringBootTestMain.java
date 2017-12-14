@@ -40,6 +40,7 @@ public class SpringBootTestMain {
         registry.subscribe();
         RegistryDirectory directory = registry.getDirectory();
 
+        System.out.println(directory.getUrls());
         TimeUnit.SECONDS.sleep(10);
 
         System.out.println(directory.getUrls());
