@@ -10,9 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>task</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <start-class>org.eddy.ApplicationStart</start-class>
+        <start-class>org.eddy.TaskApplicationStart</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

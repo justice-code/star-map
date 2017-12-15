@@ -10,7 +10,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>console</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start-class>org.eddy.ConsoleApplicationStart</start-class>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <jvmArguments>-parameters</jvmArguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
