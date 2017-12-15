@@ -9,15 +9,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableScheduling
-public class PrintSchedule {
+public class ScheduleSample{
 
-    private static final Logger logger = LoggerFactory.getLogger(PrintSchedule.class);
+    private static final Logger logger = LoggerFactory.getLogger(ScheduleSample.class);
 
     @Autowired
     private ScheduleSender sender;
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0/10 * * * * *")
     public void print() {
         sender.send("print");
+    }
+
+    @Scheduled(cron = "0/5 * * * * *")
+    public void time() {
+        sender.send("time");
     }
 }
