@@ -1,6 +1,5 @@
 package org.eddy;
 
-import org.eddy.listener.ApplicationStartListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.system.ApplicationPidFileWriter;
@@ -10,7 +9,7 @@ public class ApplicationStart {
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(ApplicationStart.class);
-        springApplication.addListeners(new ApplicationPidFileWriter("task.pid"), new ApplicationStartListener());
+        springApplication.addListeners(new ApplicationPidFileWriter("task.pid"));
         springApplication.run(args);
     }
 }

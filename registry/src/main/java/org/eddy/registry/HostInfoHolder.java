@@ -1,6 +1,5 @@
-package org.eddy;
+package org.eddy.registry;
 
-import org.eddy.registry.RegistryConfig;
 import org.eddy.url.URL;
 import org.eddy.util.NetUtils;
 

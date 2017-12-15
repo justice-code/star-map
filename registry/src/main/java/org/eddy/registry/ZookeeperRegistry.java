@@ -6,14 +6,23 @@ import org.I0Itec.zkclient.ZkConnection;
 import org.eddy.loadbalance.RandomLoadBalance;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
-public class ZookeeperRegistry implements Registry {
+public class ZookeeperRegistry implements Registry, ApplicationListener {
+
+    private static final Logger logger = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
     private ZkClient zkClient;
     private String rootPath;
@@ -58,6 +67,17 @@ public class ZookeeperRegistry implements Registry {
     @Override
     public RegistryDirectory getDirectory() {
         return directory;
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event.getClass() == ContextRefreshedEvent.class) {
+            logger.info("ContextRefreshedEvent");
+            doRegister(HostInfoHolder.TASK_PROTOCOL);
+        } else if (event.getClass() == ContextClosedEvent.class) {
+            logger.info("ContextClosedEvent");
+            unRegister(HostInfoHolder.TASK_PROTOCOL);
+        }
     }
 
     //************************************************** private ********************************************************
