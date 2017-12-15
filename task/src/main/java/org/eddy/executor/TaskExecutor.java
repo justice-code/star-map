@@ -45,11 +45,11 @@ public class TaskExecutor implements ApplicationListener{
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if (event.getClass() == ContextRefreshedEvent.class) {
-            logger.info("ContextRefreshedEvent");
+            logger.info("register url: " + HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).doRegister(HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).exportLocal(HostInfoHolder.TASK_PROTOCOL);
         } else if (event.getClass() == ContextClosedEvent.class) {
-            logger.info("ContextClosedEvent");
+            logger.info("unregister url: " + HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).unRegister(HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).unExportLocal(HostInfoHolder.TASK_PROTOCOL);
         }
