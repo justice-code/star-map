@@ -1,5 +1,6 @@
 package org.eddy.extension;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Objects;
  * 扩展点获取
  */
 @Component
+@ConfigurationProperties("star")
 public class ExtensionConfig {
 
     private Map<String, String> keyName = new HashMap<>();

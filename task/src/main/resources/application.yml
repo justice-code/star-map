@@ -1,0 +1,5 @@
+star:
+  protocolFactory: starProtocol
+  loadBalance: random
+  registry: zookeeper
+  engine: groovy
