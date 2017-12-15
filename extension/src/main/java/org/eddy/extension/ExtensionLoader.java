@@ -25,7 +25,7 @@ public class ExtensionLoader implements ApplicationContextAware{
         if (! type.isInterface()) {
             throw new RuntimeException("must be interface");
         }
-        if (type.isAnnotationPresent(Extension.class)) {
+        if (! type.isAnnotationPresent(Extension.class)) {
             throw new RuntimeException("must has Extension Annotation");
         }
     }
