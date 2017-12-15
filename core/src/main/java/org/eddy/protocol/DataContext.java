@@ -4,6 +4,8 @@ import lombok.*;
 import org.eddy.url.URL;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -16,4 +18,5 @@ public class DataContext implements Serializable{
     private URL url;
     private transient String side;
     private String caller;
+    private Map<String, String> attachments = new HashMap<>();
 }
