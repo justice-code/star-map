@@ -3,3 +3,5 @@ star:
   loadBalance: random
   registry: zookeeper
   engine: groovy
+  zookeeper:
+    address: 192.168.23.131:2181

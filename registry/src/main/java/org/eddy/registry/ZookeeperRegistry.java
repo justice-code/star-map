@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 @Component("zookeeper")
-public class ZookeeperRegistry implements Registry{
+public class ZookeeperRegistry implements Registry {
 
     private static final Logger logger = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
@@ -38,10 +38,12 @@ public class ZookeeperRegistry implements Registry{
 
     @Autowired
     private ExtensionLoader extensionLoader;
+    @Autowired
+    private RegistryConfig registryConfig;
 
     @PostConstruct
     public void init() {
-        zkClient = new ZkClient(new ZkConnection(RegistryConfig.ADDRESS), RegistryConstant.timeout);
+        zkClient = new ZkClient(new ZkConnection(registryConfig.getAddress()), RegistryConstant.timeout);
         rootPath = createNotExists();
         directory = new RegistryDirectory(extensionLoader.loadExtension(LoadBalance.class));
     }
