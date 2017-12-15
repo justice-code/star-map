@@ -29,7 +29,8 @@ public class ScheduleSender implements ApplicationListener{
 
     public void send(String file) {
         try {
-            String content = FileUtils.readFileToString(new File(file + ".Groovy"), "UTF-8");
+            String path = ScheduleSender.class.getClassLoader().getResource("groovy/" + file + ".Groovy").getFile();
+            String content = FileUtils.readFileToString(new File(path), "UTF-8");
             RegistryDirectory directory = extensionLoader.loadExtension(Registry.class).getDirectory();
             ClientProtocol client = extensionLoader.loadExtension(ProtocolFactory.class).client();
             client.send(directory.select(), new Data(KeyUtil.key(), content, false));

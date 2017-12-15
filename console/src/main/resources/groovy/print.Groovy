@@ -1,0 +1,3 @@
+package groovy
+
+print("t")
