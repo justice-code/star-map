@@ -12,11 +12,15 @@ import java.util.Map;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class DataContext implements Serializable{
     private static final long serialVersionUID = -5944882935573697136L;
 
+    @NonNull
     private URL url;
+    @NonNull
     private transient String side;
+    @NonNull
     private String caller;
     private Map<String, String> attachments = new HashMap<>();
 }

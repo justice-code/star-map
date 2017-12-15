@@ -71,8 +71,6 @@ public class StarClientProtocol implements ClientProtocol{
             connect(url);
             channel = channelMap.get(url.getAddress());
         }
-        DataContext context = new DataContext(url, Constants.dispatcher, NetUtils.getLocalHost());
-        data.setContext(context);
         channel.writeAndFlush(data);
         return FutureHolder.createFuture(data);
     }
