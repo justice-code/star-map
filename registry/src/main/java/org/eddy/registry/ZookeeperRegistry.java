@@ -61,14 +61,13 @@ public class ZookeeperRegistry implements Registry {
 
     @Override
     public void subscribe() {
-        directory.notify(zkClient.getChildren(rootPath));
-
-        zkClient.subscribeChildChanges(rootPath, new IZkChildListener() {
+        List<String> children = zkClient.subscribeChildChanges(rootPath, new IZkChildListener() {
             @Override
             public void handleChildChange(String parentPath, List<String> currentChildren) throws Exception {
                 directory.notify(currentChildren);
             }
         });
+        directory.notify(children);
     }
 
     @Override
