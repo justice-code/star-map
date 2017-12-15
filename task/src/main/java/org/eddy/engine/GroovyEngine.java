@@ -2,7 +2,9 @@ package org.eddy.engine;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GroovyEngine implements Engine{
     @Override
     public void execute(String script) {

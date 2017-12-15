@@ -4,6 +4,8 @@ import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.eddy.loadbalance.RandomLoadBalance;
+import org.eddy.protocol.ProtocolFactory;
+import org.eddy.protocol.ServerProtocol;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 @Component
 public class ZookeeperRegistry implements Registry, ApplicationListener {
@@ -27,6 +30,10 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     private ZkClient zkClient;
     private String rootPath;
     private RegistryDirectory directory;
+
+    @Autowired
+    //TODO 拓展点
+    private ProtocolFactory protocolFactory;
 
     @PostConstruct
     public void init() {
@@ -42,9 +49,20 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     }
 
     @Override
+    public void exportLocal(URL url){
+        try {
+            ServerProtocol serverProtocol = protocolFactory.server();
+            serverProtocol.openServer(url);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void unRegister(URL url) {
         String path = String.join(RegistryConstant.separator, rootPath, URL.encode(url.toFullString()));
         zkClient.delete(path);
+        protocolFactory.server().close();
     }
 
     @Override
@@ -74,6 +92,7 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
         if (event.getClass() == ContextRefreshedEvent.class) {
             logger.info("ContextRefreshedEvent");
             doRegister(HostInfoHolder.TASK_PROTOCOL);
+            exportLocal(HostInfoHolder.TASK_PROTOCOL);
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("ContextClosedEvent");
             unRegister(HostInfoHolder.TASK_PROTOCOL);

@@ -14,12 +14,16 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 import org.eddy.protocol.ServerProtocol;
 import org.eddy.protocol.star.handler.ServerHandler;
 import org.eddy.url.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component("starServer")
 public class StarServerProtocol implements ServerProtocol {
+
+    private static final Logger logger = LoggerFactory.getLogger(StarServerProtocol.class);
 
     private ServerBootstrap serverBootstrap;
     private Channel serverChannel;
@@ -44,6 +48,7 @@ public class StarServerProtocol implements ServerProtocol {
             }
         });
         serverChannel = serverBootstrap.bind(url.getPort()).sync().sync().channel();
+        logger.info("start server at:" + url.getPort());
     }
 
     @Override
