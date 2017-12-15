@@ -26,6 +26,10 @@ public class ExtensionConfig {
         keyName.put("registry", registry);
     }
 
+    public void setEngine(String engine) {
+        keyName.put("engine", engine);
+    }
+
     public String name(String key) {
 
         Objects.requireNonNull(key);

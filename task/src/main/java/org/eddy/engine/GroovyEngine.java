@@ -4,7 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("groovy")
 public class GroovyEngine implements Engine{
     @Override
     public void execute(String script) {

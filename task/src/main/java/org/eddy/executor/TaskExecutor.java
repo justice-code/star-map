@@ -2,7 +2,6 @@ package org.eddy.executor;
 
 import org.eddy.engine.Engine;
 import org.eddy.extension.ExtensionLoader;
-import org.eddy.loadbalance.LoadBalance;
 import org.eddy.protocol.Data;
 import org.eddy.queue.ServerQueue;
 import org.eddy.registry.HostInfoHolder;
@@ -27,9 +26,6 @@ public class TaskExecutor implements ApplicationListener{
     private final ExecutorService executors = Executors.newSingleThreadExecutor();
 
     @Autowired
-    private Engine engine;
-
-    @Autowired
     private ExtensionLoader extensionLoader;
 
     @PostConstruct
@@ -38,7 +34,7 @@ public class TaskExecutor implements ApplicationListener{
             while (true) {
                 try {
                     Data data = ServerQueue.take();
-                    engine.execute(data.getScript());
+                    extensionLoader.loadExtension(Engine.class).execute(data.getScript());
                 } catch (Exception e) {
                     logger.error("execute error", e);
                 }
