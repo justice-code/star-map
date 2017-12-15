@@ -4,6 +4,8 @@ import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.eddy.extension.ExtensionConfig;
+import org.eddy.extension.ExtensionLoader;
+import org.eddy.loadbalance.LoadBalance;
 import org.eddy.loadbalance.RandomLoadBalance;
 import org.eddy.protocol.ProtocolFactory;
 import org.eddy.protocol.ServerProtocol;
@@ -25,8 +27,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-@Component
-public class ZookeeperRegistry implements Registry, ApplicationListener {
+@Component("zookeeper")
+public class ZookeeperRegistry implements Registry{
 
     private static final Logger logger = LoggerFactory.getLogger(ZookeeperRegistry.class);
 
@@ -35,14 +37,13 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     private RegistryDirectory directory;
 
     @Autowired
-    private ProtocolFactory protocolFactory;
+    private ExtensionLoader extensionLoader;
 
     @PostConstruct
     public void init() {
         zkClient = new ZkClient(new ZkConnection(RegistryConfig.ADDRESS), RegistryConstant.timeout);
         rootPath = createNotExists();
-        //TODO 拓展点
-        directory = new RegistryDirectory(new RandomLoadBalance());
+        directory = new RegistryDirectory(extensionLoader.loadExtension(LoadBalance.class));
     }
 
     @Override
@@ -53,7 +54,7 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     @Override
     public void exportLocal(URL url){
         try {
-            ServerProtocol serverProtocol = protocolFactory.server();
+            ServerProtocol serverProtocol = extensionLoader.loadExtension(ProtocolFactory.class).server();
             serverProtocol.openServer(url);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -64,7 +65,11 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     public void unRegister(URL url) {
         String path = String.join(RegistryConstant.separator, rootPath, URL.encode(url.toFullString()));
         zkClient.delete(path);
-        protocolFactory.server().close();
+    }
+
+    @Override
+    public void unExportLocal(URL taskProtocol) {
+        extensionLoader.loadExtension(ProtocolFactory.class).server().close();
     }
 
     @Override
@@ -87,18 +92,6 @@ public class ZookeeperRegistry implements Registry, ApplicationListener {
     @Override
     public RegistryDirectory getDirectory() {
         return directory;
-    }
-
-    @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-        if (event.getClass() == ContextRefreshedEvent.class) {
-            logger.info("ContextRefreshedEvent");
-            doRegister(HostInfoHolder.TASK_PROTOCOL);
-            exportLocal(HostInfoHolder.TASK_PROTOCOL);
-        } else if (event.getClass() == ContextClosedEvent.class) {
-            logger.info("ContextClosedEvent");
-            unRegister(HostInfoHolder.TASK_PROTOCOL);
-        }
     }
 
     //************************************************** private ********************************************************

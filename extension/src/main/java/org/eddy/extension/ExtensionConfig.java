@@ -1,8 +1,5 @@
 package org.eddy.extension;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -19,6 +16,14 @@ public class ExtensionConfig {
 
     public void setProtocolFactory(String protocolFactory) {
         keyName.put("protocolFactory", protocolFactory);
+    }
+
+    public void setLoadBalance(String loadBalance) {
+        keyName.put("loadBalance", loadBalance);
+    }
+
+    public void setRegistry(String registry) {
+        keyName.put("registry", registry);
     }
 
     public String name(String key) {

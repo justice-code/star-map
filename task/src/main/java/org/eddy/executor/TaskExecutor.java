@@ -1,11 +1,19 @@
 package org.eddy.executor;
 
 import org.eddy.engine.Engine;
+import org.eddy.extension.ExtensionLoader;
+import org.eddy.loadbalance.LoadBalance;
 import org.eddy.protocol.Data;
 import org.eddy.queue.ServerQueue;
+import org.eddy.registry.HostInfoHolder;
+import org.eddy.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -13,13 +21,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
-public class TaskExecutor {
+public class TaskExecutor implements ApplicationListener{
 
     private static final Logger logger = LoggerFactory.getLogger(TaskExecutor.class);
     private final ExecutorService executors = Executors.newSingleThreadExecutor();
 
     @Autowired
     private Engine engine;
+
+    @Autowired
+    private ExtensionLoader extensionLoader;
 
     @PostConstruct
     private void init() {
@@ -33,5 +44,18 @@ public class TaskExecutor {
                 }
             }
         });
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event.getClass() == ContextRefreshedEvent.class) {
+            logger.info("ContextRefreshedEvent");
+            extensionLoader.loadExtension(Registry.class).doRegister(HostInfoHolder.TASK_PROTOCOL);
+            extensionLoader.loadExtension(Registry.class).exportLocal(HostInfoHolder.TASK_PROTOCOL);
+        } else if (event.getClass() == ContextClosedEvent.class) {
+            logger.info("ContextClosedEvent");
+            extensionLoader.loadExtension(Registry.class).unRegister(HostInfoHolder.TASK_PROTOCOL);
+            extensionLoader.loadExtension(Registry.class).unExportLocal(HostInfoHolder.TASK_PROTOCOL);
+        }
     }
 }
