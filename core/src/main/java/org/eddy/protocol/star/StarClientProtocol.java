@@ -8,12 +8,15 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.eddy.constant.Constants;
 import org.eddy.future.FutureHolder;
 import org.eddy.future.StarFuture;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
+import org.eddy.protocol.DataContext;
 import org.eddy.protocol.star.handler.ClientReadHandler;
 import org.eddy.url.URL;
+import org.eddy.util.NetUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -68,6 +71,8 @@ public class StarClientProtocol implements ClientProtocol{
             connect(url);
             channel = channelMap.get(url.getAddress());
         }
+        DataContext context = new DataContext(url, Constants.dispatcher, NetUtils.getLocalHost());
+        data.setContext(context);
         channel.writeAndFlush(data);
         return FutureHolder.createFuture(data);
     }
