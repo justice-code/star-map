@@ -8,11 +8,7 @@ public interface Registry {
 
     void doRegister(URL url);
 
-    void exportLocal(URL url);
-
     void unRegister(URL url);
-
-    void unExportLocal(URL taskProtocol);
 
     void subscribe();
 

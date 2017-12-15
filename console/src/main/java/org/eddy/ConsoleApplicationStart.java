@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.system.ApplicationPidFileWriter;
 
 @SpringBootApplication
-public class ApplicationStart {
+public class ConsoleApplicationStart {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(ApplicationStart.class);
-        springApplication.addListeners(new ApplicationPidFileWriter("task.pid"));
+        SpringApplication springApplication = new SpringApplication(ConsoleApplicationStart.class);
+        springApplication.addListeners(new ApplicationPidFileWriter("console.pid"));
         springApplication.run(args);
     }
 }

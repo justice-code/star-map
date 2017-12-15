@@ -54,24 +54,9 @@ public class ZookeeperRegistry implements Registry {
     }
 
     @Override
-    public void exportLocal(URL url){
-        try {
-            ServerProtocol serverProtocol = extensionLoader.loadExtension(ProtocolFactory.class).server();
-            serverProtocol.openServer(url);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void unRegister(URL url) {
         String path = String.join(RegistryConstant.separator, rootPath, URL.encode(url.toFullString()));
         zkClient.delete(path);
-    }
-
-    @Override
-    public void unExportLocal(URL taskProtocol) {
-        extensionLoader.loadExtension(ProtocolFactory.class).server().close();
     }
 
     @Override

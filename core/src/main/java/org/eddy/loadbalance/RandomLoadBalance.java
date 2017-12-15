@@ -1,5 +1,6 @@
 package org.eddy.loadbalance;
 
+import org.eddy.url.URL;
 import org.eddy.util.CollectionUtils;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class RandomLoadBalance implements LoadBalance{
     private Random random = new Random();
 
     @Override
-    public String select(List<String> urls) {
+    public URL select(List<URL> urls) {
         if (CollectionUtils.isEmpty(urls)) {
             throw new RuntimeException("urls is empty");
         }

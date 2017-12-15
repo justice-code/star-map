@@ -8,5 +8,5 @@ import java.util.List;
 @Extension("loadBalance")
 public interface LoadBalance {
 
-    String select(List<String> urls);
+    URL select(List<URL> urls);
 }

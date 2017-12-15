@@ -53,11 +53,8 @@ public class StarClientProtocol implements ClientProtocol{
     }
 
     @Override
-    public void close(URL url) {
-        Channel channel = channelMap.get(url.getAddress());
-        if (null != channel) {
-            channel.close();
-        }
+    public void close() {
+        channelMap.values().stream().filter(channel -> null != channel && channel.isActive()).forEach(channel -> channel.close());
     }
 
     @Override

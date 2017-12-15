@@ -3,6 +3,7 @@ package org.eddy.executor;
 import org.eddy.engine.Engine;
 import org.eddy.extension.ExtensionLoader;
 import org.eddy.protocol.Data;
+import org.eddy.protocol.ProtocolFactory;
 import org.eddy.queue.ServerQueue;
 import org.eddy.registry.HostInfoHolder;
 import org.eddy.registry.Registry;
@@ -47,11 +48,15 @@ public class TaskExecutor implements ApplicationListener{
         if (event.getClass() == ContextRefreshedEvent.class) {
             logger.info("register url: " + HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).doRegister(HostInfoHolder.TASK_PROTOCOL);
-            extensionLoader.loadExtension(Registry.class).exportLocal(HostInfoHolder.TASK_PROTOCOL);
+            try {
+                extensionLoader.loadExtension(ProtocolFactory.class).server().openServer(HostInfoHolder.TASK_PROTOCOL);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("unregister url: " + HostInfoHolder.TASK_PROTOCOL);
             extensionLoader.loadExtension(Registry.class).unRegister(HostInfoHolder.TASK_PROTOCOL);
-            extensionLoader.loadExtension(Registry.class).unExportLocal(HostInfoHolder.TASK_PROTOCOL);
+            extensionLoader.loadExtension(ProtocolFactory.class).server().close();
         }
     }
 }

@@ -9,7 +9,7 @@ public interface ClientProtocol {
 
     void connect(URL url) throws Exception;
 
-    void close(URL url);
+    void close();
 
     StarFuture send(URL url, Data data) throws Exception;
 }
