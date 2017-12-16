@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -69,7 +70,7 @@ public class TaskExecutor implements ApplicationListener{
             return;
         }
 
-        DataResponse response = new DataResponse(LocalDateTime.now(), success ? System.currentTimeMillis() - begin : 0, success);
+        DataResponse response = new DataResponse(LocalDateTime.ofEpochSecond(begin / 1000, 0, ZoneOffset.ofHours(8)), success ? System.currentTimeMillis() - begin : 0, success);
         data.setResponse(response);
 
         ServerQueue.offerResponse(data);

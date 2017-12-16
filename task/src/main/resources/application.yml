@@ -4,4 +4,4 @@ star:
   registry: zookeeper
   engine: groovy
   zookeeper:
-    address: 192.168.23.131:2181
+    address: 192.168.50.4:2181

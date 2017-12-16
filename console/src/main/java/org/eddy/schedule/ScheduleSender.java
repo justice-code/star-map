@@ -42,7 +42,7 @@ public class ScheduleSender implements ApplicationListener{
             URL url = directory.select();
             DataContext context = new DataContext(url, NetUtils.getLocalHost());
             StarFuture future = client.send(url, new Data(KeyUtil.key(), content, context, null));
-            logger.info(future.get().toString());
+//            logger.info(future.get().toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

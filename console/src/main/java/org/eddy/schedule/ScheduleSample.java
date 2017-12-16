@@ -16,13 +16,18 @@ public class ScheduleSample{
     @Autowired
     private ScheduleSender sender;
 
-    @Scheduled(cron = "0/10 * * * * *")
+//    @Scheduled(cron = "0/10 * * * * *")
     public void print() {
         sender.send("print");
     }
 
-    @Scheduled(cron = "0/5 * * * * *")
+//    @Scheduled(cron = "0/5 * * * * *")
     public void time() {
         sender.send("time");
+    }
+
+    @Scheduled(cron = "0/5 * * * * *")
+    public void waitExecute() {
+        sender.send("wait");
     }
 }
