@@ -40,7 +40,7 @@ public class ScheduleSender implements ApplicationListener{
             ClientProtocol client = extensionLoader.loadExtension(ProtocolFactory.class).client();
 
             URL url = directory.select();
-            DataContext context = new DataContext(url, Constants.dispatcher, NetUtils.getLocalHost());
+            DataContext context = new DataContext(url, NetUtils.getLocalHost());
             StarFuture future = client.send(url, new Data(KeyUtil.key(), content, context, null));
             logger.info(future.get().toString());
         } catch (Exception e) {

@@ -10,7 +10,6 @@ public class ClientReadHandler extends SimpleChannelInboundHandler<Data> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Data msg) throws Exception {
-        msg.getContext().setSide(Constants.dispatcher);
         FutureHolder.receive(msg);
     }
 }

@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerQueue {
 
     private static final BlockingQueue<Data> queue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<Data> responseQueue = new LinkedBlockingQueue<>();
     private static final int timeout = 1;
 
     public static void put(Data data) throws InterruptedException {
@@ -16,5 +17,13 @@ public class ServerQueue {
 
     public static Data take() throws InterruptedException {
         return queue.take();
+    }
+
+    public static void offerResponse(Data response){
+        responseQueue.offer(response);
+    }
+
+    public static Data takeResponse() throws InterruptedException {
+        return responseQueue.take();
     }
 }

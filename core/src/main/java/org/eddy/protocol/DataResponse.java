@@ -1,5 +1,6 @@
 package org.eddy.protocol;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class DataResponse implements Serializable{
 
     private static final long serialVersionUID = 8291169272139930060L;

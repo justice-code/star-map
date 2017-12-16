@@ -19,8 +19,6 @@ public class DataContext implements Serializable{
     @NonNull
     private URL url;
     @NonNull
-    private transient String side;
-    @NonNull
     private String caller;
     private Map<String, String> attachments = new HashMap<>();
 }

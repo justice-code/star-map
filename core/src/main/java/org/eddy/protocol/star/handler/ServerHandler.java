@@ -30,7 +30,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<Data> {
 
     private void handleRequest(Data request) {
         try {
-            request.getContext().setSide(Constants.executor);
             ServerQueue.put(request);
         } catch (InterruptedException e) {
             logger.error("ServerQueue put error", e);

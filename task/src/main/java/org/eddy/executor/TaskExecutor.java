@@ -3,6 +3,7 @@ package org.eddy.executor;
 import org.eddy.engine.Engine;
 import org.eddy.extension.ExtensionLoader;
 import org.eddy.protocol.Data;
+import org.eddy.protocol.DataResponse;
 import org.eddy.protocol.ProtocolFactory;
 import org.eddy.queue.ServerQueue;
 import org.eddy.registry.HostInfoHolder;
@@ -17,6 +18,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,14 +35,31 @@ public class TaskExecutor implements ApplicationListener{
     private void init() {
         executors.submit(() -> {
             while (true) {
+                Data data = null;
+                boolean success = false;
+                long begin = 0;
                 try {
-                    Data data = ServerQueue.take();
+                    data = ServerQueue.take();
+                    begin = System.currentTimeMillis();
                     extensionLoader.loadExtension(Engine.class).execute(data.getScript());
+                    success = true;
                 } catch (Exception e) {
                     logger.error("execute error", e);
                 }
+                handleResponse(data, success, begin);
             }
         });
+    }
+
+    private void handleResponse(Data data, boolean success, long begin) {
+        if (null == data) {
+            return;
+        }
+
+        DataResponse response = new DataResponse(LocalDateTime.now(), success ? System.currentTimeMillis() - begin : 0, success);
+        data.setResponse(response);
+
+        ServerQueue.offerResponse(data);
     }
 
     @Override
