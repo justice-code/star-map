@@ -19,9 +19,6 @@ public class Data implements Serializable {
 
     private String script;
 
-    @NonNull
-    private boolean success;
-
     private DataContext context;
 
     private DataResponse response;
