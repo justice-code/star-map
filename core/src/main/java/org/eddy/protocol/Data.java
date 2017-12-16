@@ -24,6 +24,8 @@ public class Data implements Serializable {
 
     private DataContext context;
 
+    private DataResponse response;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
