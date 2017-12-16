@@ -26,13 +26,14 @@ import java.util.concurrent.Executors;
 public class TaskExecutor implements ApplicationListener{
 
     private static final Logger logger = LoggerFactory.getLogger(TaskExecutor.class);
-    private final ExecutorService executors = Executors.newSingleThreadExecutor();
+    private final ExecutorService executors = Executors.newFixedThreadPool(2);
 
     @Autowired
     private ExtensionLoader extensionLoader;
 
     @PostConstruct
     private void init() {
+        //执行脚本
         executors.submit(() -> {
             while (true) {
                 Data data = null;
@@ -47,6 +48,18 @@ public class TaskExecutor implements ApplicationListener{
                     logger.error("execute error", e);
                 }
                 handleResponse(data, success, begin);
+            }
+        });
+
+        //处理响应
+        executors.submit(() -> {
+            while (true) {
+                try {
+                    Data response = ServerQueue.takeResponse();
+                    extensionLoader.loadExtension(ProtocolFactory.class).server().response(response);
+                } catch (Exception e) {
+                    logger.error("handle response error", e);
+                }
             }
         });
     }
