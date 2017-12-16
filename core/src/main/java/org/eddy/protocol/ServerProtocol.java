@@ -7,5 +7,7 @@ public interface ServerProtocol {
 
     void openServer(URL url) throws Exception;
 
+    void response(Data response);
+
     void close();
 }

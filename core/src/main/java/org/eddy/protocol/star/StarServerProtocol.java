@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.eddy.protocol.Data;
 import org.eddy.protocol.ServerProtocol;
 import org.eddy.protocol.star.handler.ServerHandler;
 import org.eddy.url.URL;
@@ -49,6 +50,11 @@ public class StarServerProtocol implements ServerProtocol {
         });
         serverChannel = serverBootstrap.bind(url.getPort()).sync().sync().channel();
         logger.info("start server at:" + url.getPort());
+    }
+
+    @Override
+    public void response(Data response) {
+        ServerHandler.ResponseHolder.get(response).writeAndFlush(response);
     }
 
     @Override
