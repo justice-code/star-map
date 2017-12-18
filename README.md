@@ -9,3 +9,5 @@
 * task：任务执行节点，可单独部署，也可集成作为web服务的模块。
 * registry：注册中心，用来管理任务执行节点地址。
 * loadBalance：负载均衡，用来获取当前可执行节点。
+
+![模块](https://raw.githubusercontent.com/justice-code/star-map/master/wiki/resources/static/star-map.png)
