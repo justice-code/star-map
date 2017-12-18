@@ -17,6 +17,10 @@
 
 目前使用spring scheduled，采用变成方式来增加定时任务，具体的任务执行逻辑则存储在脚本中。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。通过异步的future```org.eddy.future.StarFuture```来获取任务执行结果。
 
+## 任务执行
+
+使用```org.eddy.engine.Engine```作为任务执行处理器来执行任务。默认使用groovy engine作为任务脚本执行器来执行任务。
+
 ## 通信协议
 
 默认使用基于netty4的TCP长链接通信。
@@ -24,10 +28,6 @@
 ## 注册中心
 
 默认使用zookeeper作为注册中心。
-
-## 任务执行
-
-默认使用groovy作为任务脚本去执行任务。
 
 ## 模块扩展
 
