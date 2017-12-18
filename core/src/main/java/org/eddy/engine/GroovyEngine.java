@@ -21,7 +21,7 @@ public class GroovyEngine implements Engine{
     public String script(String path) {
         String p = GroovyEngine.class.getClassLoader().getResource("groovy/" + path + ".Groovy").getFile();
         try {
-            return FileUtils.readFileToString(new File(path), "UTF-8");
+            return FileUtils.readFileToString(new File(p), "UTF-8");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
