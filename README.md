@@ -37,7 +37,7 @@
 
 为了防止任务脚本越权调用spring context中的其他模块，sandbox用来为任务脚本构建沙箱环境，使得任务执行与其他服务能够隔离开来。是否开启sandbox功能需要主动增加```-Dstar.policy.path=```JVM变量。sandbox边界需要在方法上增加```org.eddy.permission.annotation.Permission```注解。
 
-## DEMO
+## demo
 
 所有demo都是用过spring boot来构建，启动也是通过执行Main函数。
 
