@@ -41,8 +41,8 @@ public class SpringBootTestMain {
 
     @Test
     public void testClient() throws Exception {
-        Data data = new Data(KeyUtil.key(), false);
-        Data second = new Data(KeyUtil.key(), "test", false);
+        Data data = new Data(KeyUtil.key());
+        Data second = new Data(KeyUtil.key(), "test", null, null);
         ClientProtocol clientProtocol = protocolFactory.client();
         clientProtocol.open();
         clientProtocol.connect(url);

@@ -15,7 +15,7 @@
 
 ## 控制中心
 
-目前使用spring scheduled，采用变成方式来增加定时任务。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。
+目前使用spring scheduled，采用变成方式来增加定时任务，具体的任务执行逻辑则存储在脚本中。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。
 
 ## 通信协议
 

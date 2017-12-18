@@ -6,4 +6,6 @@ import org.eddy.extension.Extension;
 public interface Engine {
 
     void execute(String script);
+
+    String script(String path);
 }

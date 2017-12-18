@@ -1,7 +1,6 @@
 package org.eddy.schedule;
 
-import org.apache.commons.io.FileUtils;
-import org.eddy.constant.Constants;
+import org.eddy.engine.Engine;
 import org.eddy.extension.ExtensionLoader;
 import org.eddy.future.StarFuture;
 import org.eddy.protocol.ClientProtocol;
@@ -22,8 +21,6 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-
 @Component
 public class ScheduleSender implements ApplicationListener{
 
@@ -34,8 +31,7 @@ public class ScheduleSender implements ApplicationListener{
 
     public void send(String file) {
         try {
-            String path = ScheduleSender.class.getClassLoader().getResource("groovy/" + file + ".Groovy").getFile();
-            String content = FileUtils.readFileToString(new File(path), "UTF-8");
+            String content = extensionLoader.loadExtension(Engine.class).script(file);
             RegistryDirectory directory = extensionLoader.loadExtension(Registry.class).getDirectory();
             ClientProtocol client = extensionLoader.loadExtension(ProtocolFactory.class).client();
 
