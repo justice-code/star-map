@@ -22,9 +22,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<Data> {
     protected void channelRead0(ChannelHandlerContext ctx, Data request) throws Exception {
         handleRequest(request);
         Data data = new Data(request.getId());
-//        DataContext context = new DataContext(request.getContext().getUrl(), Constants.executor, request.getContext().getCaller());
-//        data.setContext(context);
-//        ctx.channel().writeAndFlush(data);
         ResponseHolder.put(data, ctx.channel());
     }
 
