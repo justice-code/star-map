@@ -13,6 +13,10 @@
 
 ![模块](https://raw.githubusercontent.com/justice-code/star-map/master/wiki/resources/static/star-map.png)
 
+## 控制中心
+
+目前使用spring scheduled，采用变成方式来增加定时任务。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。
+
 ## 通信协议
 
 默认使用基于netty4的TCP长链接通信。
