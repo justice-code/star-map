@@ -27,4 +27,9 @@ public class StarProtocolFactory implements ProtocolFactory {
     public ServerProtocol server() {
         return serverProtocol;
     }
+
+    @Override
+    public String protocol() {
+        return "star";
+    }
 }

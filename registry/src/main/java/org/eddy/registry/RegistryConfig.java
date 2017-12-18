@@ -12,6 +12,5 @@ import org.springframework.stereotype.Component;
 public class RegistryConfig {
 
     public static String GROUP = "star";
-    public static String PROTOCOL = "star";
     private String address;
 }

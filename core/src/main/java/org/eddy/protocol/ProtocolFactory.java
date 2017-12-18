@@ -8,4 +8,6 @@ public interface ProtocolFactory {
     ClientProtocol client();
 
     ServerProtocol server();
+
+    String protocol();
 }

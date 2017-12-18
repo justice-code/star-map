@@ -31,6 +31,9 @@ public class TaskExecutor implements ApplicationListener{
 
     @Autowired
     private ExtensionLoader extensionLoader;
+    
+    @Autowired
+    private HostInfoHolder infoHolder;
 
     @PostConstruct
     private void init() {
@@ -79,16 +82,16 @@ public class TaskExecutor implements ApplicationListener{
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if (event.getClass() == ContextRefreshedEvent.class) {
-            logger.info("register url: " + HostInfoHolder.TASK_PROTOCOL);
-            extensionLoader.loadExtension(Registry.class).doRegister(HostInfoHolder.TASK_PROTOCOL);
+            logger.info("register url: " + infoHolder.taskProtocolUrl());
+            extensionLoader.loadExtension(Registry.class).doRegister(infoHolder.taskProtocolUrl());
             try {
-                extensionLoader.loadExtension(ProtocolFactory.class).server().openServer(HostInfoHolder.TASK_PROTOCOL);
+                extensionLoader.loadExtension(ProtocolFactory.class).server().openServer(infoHolder.taskProtocolUrl());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if (event.getClass() == ContextClosedEvent.class) {
-            logger.info("unregister url: " + HostInfoHolder.TASK_PROTOCOL);
-            extensionLoader.loadExtension(Registry.class).unRegister(HostInfoHolder.TASK_PROTOCOL);
+            logger.info("unregister url: " + infoHolder.taskProtocolUrl());
+            extensionLoader.loadExtension(Registry.class).unRegister(infoHolder.taskProtocolUrl());
             extensionLoader.loadExtension(ProtocolFactory.class).server().close();
         }
     }
