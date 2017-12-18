@@ -39,3 +39,5 @@
 
 * task启动类：```org.eddy.TaskApplicationStart```
 * console启动类：```org.eddy.ConsoleApplicationStart```
+
+如果使用单机同时启动task和console，可以通过指定web服务监听端口```-Dserver.port=8082```来防止端口被占用导致的spring boot启动报错。
