@@ -15,7 +15,7 @@
 
 ## 控制中心
 
-目前使用spring scheduled，采用变成方式来增加定时任务，具体的任务执行逻辑则存储在脚本中。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。
+目前使用spring scheduled，采用变成方式来增加定时任务，具体的任务执行逻辑则存储在脚本中。触发时由```org.eddy.schedule.ScheduleSender```来推送执行脚本到具体的执行节点。通过异步的future```org.eddy.future.StarFuture```来获取任务执行结果。
 
 ## 通信协议
 
@@ -45,3 +45,8 @@
 * console启动类：```org.eddy.ConsoleApplicationStart```
 
 如果使用单机同时启动task和console，可以通过指定web服务监听端口```-Dserver.port=8082```来防止端口被占用导致的spring boot启动报错。
+
+## 存在的问题
+
+1. 控制中心存在单点问题，但控制中心无需执行任务，前期无需扩展。
+2. 仅支持编程式地增加执行任务。
