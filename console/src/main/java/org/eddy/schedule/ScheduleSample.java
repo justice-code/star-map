@@ -3,6 +3,7 @@ package org.eddy.schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,8 +27,13 @@ public class ScheduleSample{
         sender.send("time");
     }
 
-    @Scheduled(cron = "0/5 * * * * *")
+//    @Scheduled(cron = "0/5 * * * * *")
     public void waitExecute() {
+        sender.send("wait");
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    public void waitExecute2() {
         sender.send("wait");
     }
 }

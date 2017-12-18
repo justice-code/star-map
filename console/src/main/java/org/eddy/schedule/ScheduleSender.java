@@ -21,16 +21,22 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
+
 @Component
 public class ScheduleSender implements ApplicationListener{
 
     private static final Logger logger = LoggerFactory.getLogger(ScheduleSender.class);
+
+    private CountDownLatch latch = new CountDownLatch(1);
 
     @Autowired
     private ExtensionLoader extensionLoader;
 
     public void send(String file) {
         try {
+            latch.await();
+
             String content = extensionLoader.loadExtension(Engine.class).script(file);
             RegistryDirectory directory = extensionLoader.loadExtension(Registry.class).getDirectory();
             ClientProtocol client = extensionLoader.loadExtension(ProtocolFactory.class).client();
@@ -50,6 +56,7 @@ public class ScheduleSender implements ApplicationListener{
             extensionLoader.loadExtension(Registry.class).subscribe();
             extensionLoader.loadExtension(ProtocolFactory.class).client().open();
             logger.info("subscribe:" + extensionLoader.loadExtension(Registry.class).getDirectory().list());
+            latch.countDown();
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("unSubscribe task");
             extensionLoader.loadExtension(Registry.class).unSubscribe();
