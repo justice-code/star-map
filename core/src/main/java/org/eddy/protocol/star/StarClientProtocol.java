@@ -8,12 +8,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.eddy.constant.Constants;
 import org.eddy.future.FutureHolder;
 import org.eddy.future.StarFuture;
 import org.eddy.protocol.ClientProtocol;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.DataContext;
+import org.eddy.protocol.star.handler.ClientIdleHandler;
 import org.eddy.protocol.star.handler.ClientReadHandler;
 import org.eddy.url.URL;
 import org.eddy.util.NetUtils;
@@ -43,7 +45,9 @@ public class StarClientProtocol implements ClientProtocol{
 //                        .addLast("logging",new LoggingHandler(LogLevel.INFO))
                         .addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))) // in 1
                         .addLast("handler", new ClientReadHandler()) // in 2
-                        .addLast("encoder", new ObjectEncoder()); // out 3
+                        .addLast("encoder", new ObjectEncoder())// out 3
+                        .addLast("idleStateHandler", new IdleStateHandler(0, 1, 0))
+                        .addLast(new ClientIdleHandler());
 
             }
         });
