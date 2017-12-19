@@ -2,6 +2,7 @@ package org.eddy.executor;
 
 import org.eddy.engine.Engine;
 import org.eddy.extension.ExtensionLoader;
+import org.eddy.permission.config.SandboxConfiguration;
 import org.eddy.protocol.Data;
 import org.eddy.protocol.DataResponse;
 import org.eddy.protocol.ProtocolFactory;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -34,6 +36,9 @@ public class TaskExecutor implements ApplicationListener{
     
     @Autowired
     private HostInfoHolder infoHolder;
+
+    @Autowired
+    private SandboxConfiguration sandbox;
 
     @PostConstruct
     private void init() {
@@ -89,6 +94,7 @@ public class TaskExecutor implements ApplicationListener{
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            sandbox.configSandbox();
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("unregister url: " + infoHolder.taskProtocolUrl());
             extensionLoader.loadExtension(Registry.class).unRegister(infoHolder.taskProtocolUrl());
