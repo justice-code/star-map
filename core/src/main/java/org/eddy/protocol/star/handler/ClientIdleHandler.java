@@ -17,6 +17,8 @@ public class ClientIdleHandler extends ChannelDuplexHandler {
                     future.channel().close();
                 }
             });
+        } else {
+            ctx.fireUserEventTriggered(evt);
         }
     }
 }
