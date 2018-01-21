@@ -15,6 +15,7 @@
         <module>task</module>
         <module>core</module>
         <module>sandbox</module>
+        <module>selector</module>
     </modules>
 
     <parent>
