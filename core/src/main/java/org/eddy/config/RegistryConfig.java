@@ -13,4 +13,6 @@ public class RegistryConfig {
 
     public static String GROUP = "star";
     private String address;
+    private String name;
+    private String selectorPath;
 }

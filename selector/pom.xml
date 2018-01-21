@@ -12,4 +12,11 @@
     <artifactId>selector</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>org.eddy</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
