@@ -3,29 +3,18 @@ package org.eddy.registry;
 import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
-import org.eddy.extension.ExtensionConfig;
+import org.eddy.config.RegistryConfig;
 import org.eddy.extension.ExtensionLoader;
 import org.eddy.loadbalance.LoadBalance;
-import org.eddy.loadbalance.RandomLoadBalance;
-import org.eddy.protocol.ProtocolFactory;
-import org.eddy.protocol.ServerProtocol;
 import org.eddy.url.URL;
 import org.eddy.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextClosedEvent;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 @Component("zookeeper")
 public class ZookeeperRegistry implements Registry {

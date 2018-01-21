@@ -1,4 +1,4 @@
-package org.eddy.registry;
+package org.eddy.config;
 
 import lombok.Getter;
 import lombok.Setter;
