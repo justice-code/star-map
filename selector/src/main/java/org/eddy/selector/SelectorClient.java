@@ -3,6 +3,7 @@ package org.eddy.selector;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Closeable;
@@ -16,6 +17,7 @@ public class SelectorClient extends LeaderSelectorListenerAdapter implements Clo
 
     private boolean leader = false;
 
+    @Autowired
     public SelectorClient(CuratorFramework curatorFramework) {
         this.leaderSelector = new LeaderSelector(curatorFramework, selectorPath, this);
         this.leaderSelector.autoRequeue();
@@ -42,4 +44,5 @@ public class SelectorClient extends LeaderSelectorListenerAdapter implements Clo
     public void giveBack() {
         this.leaderSelector.requeue();
     }
+
 }
