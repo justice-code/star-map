@@ -32,6 +32,10 @@ public class ExtensionConfig {
         keyName.put("engine", engine);
     }
 
+    public void setSelector(String selector) {
+        keyName.put("selector", selector);
+    }
+
     public String name(String key) {
 
         Objects.requireNonNull(key);
