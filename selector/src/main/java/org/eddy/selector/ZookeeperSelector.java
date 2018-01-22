@@ -1,7 +1,7 @@
 package org.eddy.selector;
 
+import org.apache.curator.framework.CuratorFramework;
 import org.eddy.config.RegistryConfig;
-import org.eddy.util.ZkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +16,9 @@ public class ZookeeperSelector implements Selector{
     @Autowired
     private RegistryConfig registryConfig;
 
+    @Autowired
+    private CuratorFramework client;
+
     @Override
     public boolean isLeader() {
         return selectorClient.isLeader();
@@ -23,7 +26,7 @@ public class ZookeeperSelector implements Selector{
 
     @Override
     public void start() {
-        ZkUtil.createClient(registryConfig.getAddress()).start();
+        client.start();
         selectorClient.start();
     }
 

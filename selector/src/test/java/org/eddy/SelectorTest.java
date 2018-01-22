@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.IOException;
+
 @SpringBootTest(classes = SpringBootTestMain.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SelectorTest {
@@ -16,8 +18,8 @@ public class SelectorTest {
     private Selector selector;
 
     @Test
-    public void test() {
+    public void test() throws IOException {
         selector.start();
-        System.out.println(selector.isLeader());
+        System.in.read();
     }
 }
