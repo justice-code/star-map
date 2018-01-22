@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class SelectorClient extends LeaderSelectorListenerAdapter implements Closeable{
@@ -16,6 +17,7 @@ public class SelectorClient extends LeaderSelectorListenerAdapter implements Clo
     private final String selectorPath = "/star/leader";
 
     private boolean leader = false;
+    private int waitSecond = 5;
 
     @Autowired
     public SelectorClient(CuratorFramework curatorFramework) {
@@ -26,6 +28,13 @@ public class SelectorClient extends LeaderSelectorListenerAdapter implements Clo
     @Override
     public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
         leader = true;
+        try {
+            TimeUnit.SECONDS.sleep(waitSecond);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            leader = false;
+        }
     }
 
     @Override
