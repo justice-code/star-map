@@ -165,15 +165,6 @@ public class NetUtils {
     }
 
     private static InetAddress getLocalAddress0() {
-        InetAddress localAddress = null;
-        try {
-            localAddress = InetAddress.getLocalHost();
-            if (isValidAddress(localAddress)) {
-                return localAddress;
-            }
-        } catch (Throwable e) {
-            logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
-        }
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
             if (interfaces != null) {
@@ -202,7 +193,7 @@ public class NetUtils {
             logger.warn("Failed to retriving ip address, " + e.getMessage(), e);
         }
         logger.error("Could not get local host ip address, will use 127.0.0.1 instead.");
-        return localAddress;
+        return null;
     }
 
     public static String getHostName(String address) {
