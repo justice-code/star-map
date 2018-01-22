@@ -1,0 +1,7 @@
+star:
+  protocolFactory: starProtocol
+  loadBalance: random
+  registry: zookeeper
+  engine: groovy
+  zookeeper:
+    address: 192.168.23.143:2181
