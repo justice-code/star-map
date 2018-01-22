@@ -14,9 +14,6 @@ public class ZookeeperSelector implements Selector{
     private SelectorClient selectorClient;
 
     @Autowired
-    private RegistryConfig registryConfig;
-
-    @Autowired
     private CuratorFramework client;
 
     @Override
@@ -31,8 +28,12 @@ public class ZookeeperSelector implements Selector{
     }
 
     @Override
-    public void close() throws IOException{
-        selectorClient.close();
+    public void close(){
+        try {
+            selectorClient.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

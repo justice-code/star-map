@@ -11,7 +11,7 @@ public interface Selector {
 
     void start();
 
-    void close() throws IOException;
+    void close();
 
     void giveBack();
 }

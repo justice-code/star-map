@@ -9,6 +9,7 @@ import org.eddy.protocol.DataContext;
 import org.eddy.protocol.ProtocolFactory;
 import org.eddy.registry.Registry;
 import org.eddy.registry.RegistryDirectory;
+import org.eddy.selector.Selector;
 import org.eddy.url.URL;
 import org.eddy.util.KeyUtil;
 import org.eddy.util.NetUtils;
@@ -36,6 +37,9 @@ public class ScheduleSender implements ApplicationListener{
     public void send(String file) {
         try {
             latch.await();
+            if (! extensionLoader.loadExtension(Selector.class).isLeader()) {
+                return;
+            }
 
             String content = extensionLoader.loadExtension(Engine.class).script(file);
             RegistryDirectory directory = extensionLoader.loadExtension(Registry.class).getDirectory();
@@ -55,12 +59,14 @@ public class ScheduleSender implements ApplicationListener{
         if (event.getClass() == ContextRefreshedEvent.class) {
             extensionLoader.loadExtension(Registry.class).subscribe();
             extensionLoader.loadExtension(ProtocolFactory.class).client().open();
+            extensionLoader.loadExtension(Selector.class).start();
             logger.info("subscribe:" + extensionLoader.loadExtension(Registry.class).getDirectory().list());
             latch.countDown();
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("unSubscribe task");
             extensionLoader.loadExtension(Registry.class).unSubscribe();
             extensionLoader.loadExtension(ProtocolFactory.class).client().close();
+            extensionLoader.loadExtension(Selector.class).close();
         }
     }
 }
