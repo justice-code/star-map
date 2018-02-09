@@ -1,6 +1,8 @@
 package org.eddy;
 
 
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.zookeeper.CreateMode;
 import org.eddy.selector.Selector;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +19,17 @@ public class SelectorTest {
     @Autowired
     private Selector selector;
 
+    @Autowired
+    private CuratorFramework framework;
+
     @Test
     public void test() throws IOException {
         selector.start();
         System.in.read();
+    }
+
+    @Test
+    public void test2() throws Exception {
+        framework.create().withMode(CreateMode.PERSISTENT).forPath("/t");
     }
 }

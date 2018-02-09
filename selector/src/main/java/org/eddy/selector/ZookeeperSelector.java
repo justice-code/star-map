@@ -13,9 +13,6 @@ public class ZookeeperSelector implements Selector{
     @Autowired
     private SelectorClient selectorClient;
 
-    @Autowired
-    private CuratorFramework client;
-
     @Override
     public boolean isLeader() {
         return selectorClient.isLeader();
@@ -23,7 +20,6 @@ public class ZookeeperSelector implements Selector{
 
     @Override
     public void start() {
-        client.start();
         selectorClient.start();
     }
 

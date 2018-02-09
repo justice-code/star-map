@@ -17,6 +17,8 @@ public class BeanInit {
     @Bean
     public CuratorFramework createClient() {
         ExponentialBackoffRetry retryPolicy = new ExponentialBackoffRetry(1000, 3);
-        return CuratorFrameworkFactory.newClient(registryConfig.getAddress(), retryPolicy);
+        CuratorFramework framework = CuratorFrameworkFactory.newClient(registryConfig.getAddress(), retryPolicy);
+        framework.start();
+        return framework;
     }
 }
