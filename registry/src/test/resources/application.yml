@@ -1,0 +1,8 @@
+star:
+  protocolFactory: starProtocol
+  loadBalance: random
+  registry: zookeeper
+  engine: groovy
+  selector: zookeeperSelector
+  zookeeper:
+    address: 10.13.10.31:2181

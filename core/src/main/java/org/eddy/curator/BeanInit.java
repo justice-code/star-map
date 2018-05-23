@@ -1,4 +1,4 @@
-package org.eddy.selector;
+package org.eddy.curator;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
