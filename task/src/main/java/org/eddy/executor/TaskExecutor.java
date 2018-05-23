@@ -88,13 +88,13 @@ public class TaskExecutor implements ApplicationListener{
     public void onApplicationEvent(ApplicationEvent event) {
         if (event.getClass() == ContextRefreshedEvent.class) {
             logger.info("register url: " + infoHolder.taskProtocolUrl());
-            extensionLoader.loadExtension(Registry.class).doRegister(infoHolder.taskProtocolUrl());
             try {
                 extensionLoader.loadExtension(ProtocolFactory.class).server().openServer(infoHolder.taskProtocolUrl());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             sandbox.configSandbox();
+            extensionLoader.loadExtension(Registry.class).doRegister(infoHolder.taskProtocolUrl());
         } else if (event.getClass() == ContextClosedEvent.class) {
             logger.info("unregister url: " + infoHolder.taskProtocolUrl());
             extensionLoader.loadExtension(Registry.class).unRegister(infoHolder.taskProtocolUrl());
