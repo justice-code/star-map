@@ -46,4 +46,10 @@ public class ExtensionConfig {
 
         return keyName.get(key);
     }
+
+    public boolean contain(String key) {
+        Objects.requireNonNull(key);
+
+        return keyName.containsKey(key);
+    }
 }

@@ -21,10 +21,11 @@ public class ExtensionLoader implements ApplicationContextAware{
     }
 
     private String name(Class<?> type) {
-        if (type.isAnnotationPresent(Activation.class)) {
-            return type.getAnnotation(Activation.class).value();
+        String key = type.getAnnotation(Extension.class).value();
+        if (extensionConfig.contain(key)) {
+            return extensionConfig.name(key);
         } else {
-            return extensionConfig.name(type.getAnnotation(Extension.class).value());
+            return type.getAnnotation(Activation.class).value();
         }
     }
 

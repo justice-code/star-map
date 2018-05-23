@@ -64,11 +64,11 @@ public class CuratorZkRegistry implements Registry {
 
                 String root = event.getPath();
                 List<String> listenChildren = curatorFramework.getChildren().forPath(root);
-                directory.notify(childrenList(root, listenChildren));
+                directory.notify(listenChildren);
 
             }).forPath(rootPath);
 
-            directory.notify(childrenList(rootPath, children));
+            directory.notify(children);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,14 +82,11 @@ public class CuratorZkRegistry implements Registry {
 
     @Override
     public RegistryDirectory getDirectory() {
-        return null;
+        return directory;
     }
 
     //--------------------------------------------private--------------------------------------------
 
-    private List<String> childrenList(String root, List<String> children) {
-        return children.stream().map(path -> String.join(RegistryConstant.separator, root, path)).collect(Collectors.toList());
-    }
     private String createNotExists() throws Exception {
         String groupPath = String.join(RegistryConstant.separator, StringUtils.EMPTY, RegistryConfig.GROUP);
         if (null == curatorFramework.checkExists().forPath(groupPath)) {

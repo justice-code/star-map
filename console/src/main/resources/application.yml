@@ -1,3 +1,4 @@
 star:
+  registry: curatorZkRegistry
   zookeeper:
     address: 10.13.10.31:2181
