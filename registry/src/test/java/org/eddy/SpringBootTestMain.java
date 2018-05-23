@@ -6,6 +6,7 @@ import org.eddy.url.URL;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class SpringBootTestMain {
 
     @Autowired
+    @Qualifier("zookeeper")
     private Registry registry;
 
     public static void main(String[] args) {
