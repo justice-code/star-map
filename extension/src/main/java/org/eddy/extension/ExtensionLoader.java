@@ -16,9 +16,16 @@ public class ExtensionLoader implements ApplicationContextAware{
 
     public <T> T loadExtension(Class<T> type) {
         check(type);
-        Extension extension = type.getAnnotation(Extension.class);
-        String key = extension.value();
-        return applicationContext.getBean(extensionConfig.name(key), type);
+        String key = name(type);
+        return applicationContext.getBean(key, type);
+    }
+
+    private String name(Class<?> type) {
+        if (type.isAnnotationPresent(Activation.class)) {
+            return type.getAnnotation(Activation.class).value();
+        } else {
+            return extensionConfig.name(type.getAnnotation(Extension.class).value());
+        }
     }
 
     private void check(Class type) {
