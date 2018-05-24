@@ -2,3 +2,5 @@ star:
   registry: curatorZkRegistry
   zookeeper:
     address: 10.13.10.31:2181
+  policy:
+    path: /Users/xuyi/java/star-map/task/src/main/resources/java.policy

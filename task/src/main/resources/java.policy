@@ -1,0 +1,6 @@
+grant {
+        permission java.security.AllPermission;
+};
+deny codeBase "file:/Users/xuyi/.m2/repository/org/codehaus/groovy/groovy-all/3.0.0-alpha-1/groovy-all-3.0.0-alpha-1.jar"{
+        permission org.eddy.permission.InvokePermission "deny";
+};

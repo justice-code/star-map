@@ -34,6 +34,6 @@ public class ScheduleSample{
 
     @Scheduled(fixedDelay = 1000)
     public void waitExecute2() {
-        sender.send("wait");
+        sender.send("print");
     }
 }
