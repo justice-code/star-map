@@ -48,7 +48,7 @@ public class StarServerProtocol implements ServerProtocol {
 
             }
         });
-        serverChannel = serverBootstrap.bind(url.getPort()).sync().sync().channel();
+        serverChannel = serverBootstrap.bind(url.getPort()).sync().channel();
         logger.info("start server at:" + url.getPort());
     }
 
